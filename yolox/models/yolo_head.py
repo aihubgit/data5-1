@@ -577,7 +577,7 @@ class YOLOXHead(nn.Module):
         is_in_boxes_all = is_in_boxes.sum(dim=0) > 0
         # in fixed center
 
-        center_radius = 2.5
+        center_radius = 3.0  #2.5 change
 
         gt_bboxes_per_image_l = (gt_bboxes_per_image[:, 0]).unsqueeze(1).repeat(
             1, total_num_anchors

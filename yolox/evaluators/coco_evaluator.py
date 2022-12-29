@@ -61,7 +61,10 @@ def per_class_AP_table(coco_eval, class_names=COCO_CLASSES, headers=["class", "A
     for idx, name in enumerate(class_names):
         # area range index 0: all area ranges
         # max dets index -1: typically 100 per image
-        precision = precisions[:, :, idx, 0, -1]
+        
+        #change
+        #precision = precisions[:, :, idx, 0, -1]
+        precision = precisions[0, :, idx, 0, -1]
         precision = precision[precision > -1]
         ap = np.mean(precision) if precision.size else float("nan")
         per_class_AP[name] = float(ap * 100)
@@ -302,7 +305,16 @@ class COCOEvaluator:
                 cocoEval.summarize()
             info += redirect_string.getvalue()
             cat_ids = list(cocoGt.cats.keys())
-            cat_names = [cocoGt.cats[catId]['name'] for catId in sorted(cat_ids)]
+            
+            #change
+            cat_names = []
+            for catId in cat_ids:
+            	catname = cocoGt.cats[catId]["name"]
+            	catobj = cocoGt.cats[catId]["object"]
+            	catlevel = cocoGt.cats[catId]["level2"]
+            	cl = catlevel + '_' + catobj + '_' + catname
+            	cat_names.append(cl)
+            #cat_names = [cocoGt.cats[catId]['name'] for catId in sorted(cat_ids)]
             if self.per_class_AP:
                 AP_table = per_class_AP_table(cocoEval, class_names=cat_names)
                 info += "per class AP:\n" + AP_table + "\n"
