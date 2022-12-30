@@ -11,7 +11,7 @@
  - output 되는 요소와 데이터 차원 등
 
 ## task
- - 객체 인식 
+ - 객체 인식 고도화 모델
 
 ## training dataset
  - traing 대상이 되는 데이터
