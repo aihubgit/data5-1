@@ -9,8 +9,8 @@ import cv2
 import numpy as np
 from pycocotools.coco import COCO
 
-from ..dataloading import get_yolox_datadir
-from .datasets_wrapper import Dataset
+from yolox.data.dataloading import get_yolox_datadir
+from yolox.data.datasets.datasets_wrapper import Dataset
 
 
 def remove_useless_info(coco):
@@ -74,7 +74,12 @@ class COCODataset(Dataset):
             catlevel = c["level2"]
             cl = catlevel + '_' + catobj + '_' + catname
             cl_li.append(cl)
+        cl_li.sort()
         self._classes = tuple(cl_li)
+
+        
+        print(self._classes)
+        print(len(self._classes))
         #self._classes = tuple([c["name"] for c in self.cats])
         self.imgs = None
         self.name = name
@@ -241,3 +246,5 @@ class COCODataset(Dataset):
         if self.preproc is not None:
             img, target = self.preproc(img, target, self.input_dim)
         return img, target, img_info, img_id
+        
+COCODataset(data_dir='/media/smartcoop/99/5-1/out/', json_file='instances_train2017.json', name='train2017')
